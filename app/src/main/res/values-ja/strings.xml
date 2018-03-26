@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">ちょうどjava</string>
+    <string name="thank_you">ありがとうございました</string>
+    <string name="toppings">トッピング</string>
+    <string name="whipped_cream">ホイップクリーム</string>
+    <string name="chocolate">チョコレート</string>
+    <string name="quantity">量</string>
+    <string name="order">注文</string>
+    <string name="name">名</string>
+    <string name="price">価格</string>
+    <string name="intial_quantity">2</string>
+    <string name="_minus">-</string>
+    <string name="_plus">+</string>
+    <string name="nice_day"> 素敵な一日を！</string>
+
+    <string name="order_summary_name">名: <xliff:g id="name" example="George">%s</xliff:g></string>
+    Whipped cream topping for the order summary. It will be shown in the format of
+    "Add whipped cream? true" or "Add whipped cream? false". [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_whipped_cream">ホイップクリームを加える</string>
+
+    <!--
+      Chocolate topping for the order summary. It will be shown in the format of
+      "Add chocolate? true" or "Add chocolate? false". [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_chocolate">チョコレートを加える</string>
+
+    <!--
+          Quantity of coffee cups for the order summary. It will be shown in the format of
+          "Quantity: 2", where 2 is the number of cups ordered. [CHAR LIMIT=NONE]
+        -->
+    <string name="order_summary_quantity">量:<xliff:g id="quantity" example="2">%d</xliff:g></string>
+
+    <!--
+          Total price for the order summary. It will be shown in the format of
+          "Total: $10" where $10 is the price. [CHAR LIMIT=NONE]
+        -->
+    <string name="order_summary_price">価格: <xliff:g id="price" example="$10">%s</xliff:g></string>
+
+    <!--
+         Subject line for the order summary email. It will be in the format of
+         "Just Java order for George" where George is the user's name. [CHAR LIMIT=NONE]
+       -->
+
+    <string name="order_summary_email_subject">ただのJava注文 <xliff:g id="name" example="George">%s</xliff:g></string>
+    <string name="initial_quantity_value">2</string>
+
+
+
+</resources>

@@ -1,7 +1,7 @@
 package com.example.android.justjava;
 
 
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.NumberFormat;
 
 /**
  * This app displays an order form to order coffee.
@@ -128,26 +130,24 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Create summary of the order.
      *
-     * @param hasWhippedCream is whether or not the user wants whipped cream topping
+     * @param addWhippedCream is whether or not the user wants whipped cream topping
      * @param addChocolate    is whether or not the user wants chocolate topping
      * @param price of the order
      * @return text summary
      */
-    private String createOrderSummary(String name, int price, boolean hasWhippedCream, boolean addChocolate) {
-        String priceMessage = "Name: " + name;
-        priceMessage = priceMessage + "\nAdd whipped cream" ;
-        priceMessage = priceMessage + "\nAdd chocolate " ;
-        priceMessage = priceMessage + "\nQuantity: " + quantity;
-        priceMessage = priceMessage + "\nTotal: $" + price;
-        priceMessage = priceMessage + "\nThank you!" + "\n Have a wonderful day!";
+    @SuppressLint("StringFormatInvalid")
+    private String createOrderSummary(String name, int price, boolean addWhippedCream, boolean addChocolate) {
+        String priceMessage = getString(R.string.order_summary_name, name);
+        priceMessage += "\n" + getString(R.string.order_summary_whipped_cream,addWhippedCream) ;
+        priceMessage += "\n" + getString(R.string.order_summary_chocolate,addChocolate) ;
+        priceMessage += "\n" + getString(R.string.order_summary_quantity, quantity);
+        priceMessage += "\n" + getString(R.string.order_summary_price);
+        NumberFormat.getCurrencyInstance().format(price);
+        priceMessage = priceMessage + "\n" + getString(R.string.thank_you)+"\n "+ getString(R.string.nice_day);
         return priceMessage;
 
     }
 
-    private int calculatePrice() {
-        int price = quantity * 5;
-        return price;
-    }
 
 
     /**
