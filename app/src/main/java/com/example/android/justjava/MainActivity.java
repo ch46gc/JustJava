@@ -1,14 +1,12 @@
 package com.example.android.justjava;
 
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,20 +20,13 @@ import java.text.NumberFormat;
 public class MainActivity extends AppCompatActivity {
     int quantity = 2;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //<< this
         setContentView(R.layout.activity_main);
 
-        // If the Android version is lower than Jellybean, use this call to hide
-        // the status bar.
-        // requestWindowFeature(Window.Feature_NO_TITLE);
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        setContentView(R.layout.activity_main);
     }
 
     /**
@@ -48,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
             //Exit this method because there is nothing left to do
             return;
         }
-
         quantity = quantity + 1;
         displayQuantity(quantity);
 
@@ -66,47 +56,44 @@ public class MainActivity extends AppCompatActivity {
         }
         quantity = quantity - 1;
         displayQuantity(quantity);
-
-
     }
-
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
         //Find the user's name
-        EditText nameField = (EditText) findViewById(R.id.name_field);
-        String name = nameField.getText().toString();
+        EditText nameField = findViewById(R.id.name_field);
+        Editable nameEditable = nameField.getText();
+        String name = nameEditable.toString();
 
         //Figure out if the user wants whipped cream topping
-        CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
+        CheckBox whippedCreamCheckBox = findViewById(R.id.whipped_cream_checkbox);
         boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
 
         //Figure out if the user wants chocolate topping
-        CheckBox chocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_checkbox);
+        CheckBox chocolateCheckBox = findViewById(R.id.chocolate_checkbox);
         boolean hasChocolate = chocolateCheckBox.isChecked();
-
+        // Calculate the price
         int price = calculatePrice(hasWhippedCream, hasChocolate);
-        String priceMessage = createOrderSummary(name, price, hasWhippedCream, hasChocolate);
-
+        // Displays the order summary on the screen
+        // Display the order summary on the screen
+        String message = createOrderSummary(name, price, hasWhippedCream, hasChocolate);
+        // Use an intent to launch an email app.
+        // Send the order summary in the email .
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_SUBJECT, "Just Java order for " + name);
-        intent.putExtra(Intent.EXTRA_TEXT, priceMessage);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
-
-
     }
-
-
     /**
-     * Calculates the price of the order based on the current quantity.
+     * Calculates the price of the order.
      *
-     * @param addWhippedCream is whether or not the user wants whipped cream topping
-     * @param addChocolate is whether or not the user wants chocolate topping or not
-     * @return the total price
+     * @param addWhippedCream is whether or not we should include whipped cream topping in the price
+     * @param addChocolate    is whether or not we should include chocolate topping in the price
+     * @return total price
      */
 
 
@@ -126,37 +113,22 @@ public class MainActivity extends AppCompatActivity {
         return quantity * basePrice;
 
     }
-
-    /**
-     * Create summary of the order.
-     *
-     * @param addWhippedCream is whether or not the user wants whipped cream topping
-     * @param addChocolate    is whether or not the user wants chocolate topping
-     * @param price of the order
-     * @return text summary
-     */
-    @SuppressLint("StringFormatInvalid")
     private String createOrderSummary(String name, int price, boolean addWhippedCream, boolean addChocolate) {
-        String priceMessage = getString(R.string.order_summary_name, name);
-        priceMessage += "\n" + getString(R.string.order_summary_whipped_cream,addWhippedCream) ;
-        priceMessage += "\n" + getString(R.string.order_summary_chocolate,addChocolate) ;
-        priceMessage += "\n" + getString(R.string.order_summary_quantity, quantity);
-        priceMessage += "\n" + getString(R.string.order_summary_price);
+        String priceMessage = getString(R.string.order_summary_name) + name;
+        priceMessage += "\n" + getString(R.string.order_summary_whipped_cream) + addWhippedCream;
+        priceMessage += "\n" + getString(R.string.order_summary_chocolate) + addChocolate;
+        priceMessage += "\n" + getString(R.string.order_summary_quantity) + quantity;
+        priceMessage += "\n" + getString(R.string.order_summary_price) + price;
         NumberFormat.getCurrencyInstance().format(price);
-        priceMessage = priceMessage + "\n" + getString(R.string.thank_you)+"\n "+ getString(R.string.nice_day);
+        priceMessage += "\n" + getString(R.string.thank_you);
         return priceMessage;
-
     }
-
-
 
     /**
      * This method displays the given quantity value on the screen.
      */
     private void displayQuantity(int numberOfCoffees) {
-        TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
+        TextView quantityTextView = findViewById(R.id.quantity_text_view);
         quantityTextView.setText("" + numberOfCoffees);
     }
-
-
 }
