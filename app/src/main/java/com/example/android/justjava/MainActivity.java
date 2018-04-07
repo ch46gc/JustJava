@@ -28,10 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     }
-
-    /**
-     * This method is called when the plus button is clicked.
-     */
+      /**
+       * This method is called when the plus button is clicked.
+       */
     public void increment(View view) {
         if (quantity == 100) {
             //Show an error message as a toast
@@ -41,12 +40,10 @@ public class MainActivity extends AppCompatActivity {
         }
         quantity = quantity + 1;
         displayQuantity(quantity);
-
-    }
-
-    /**
-     * This method is called when the minus button is clicked.
-     */
+        }
+       /**
+        * This method is called when the minus button is clicked.
+        */
     public void decrement(View view) {
         //Show an error message as a toast
         Toast.makeText(this, "You can't have less than 1 cup of coffee", Toast.LENGTH_SHORT).show();
@@ -57,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         quantity = quantity - 1;
         displayQuantity(quantity);
     }
-    /**
-     * This method is called when the order button is clicked.
-     */
+      /**
+       * This method is called when the order button is clicked.
+       */
     public void submitOrder(View view) {
         //Find the user's name
         EditText nameField = findViewById(R.id.name_field);
@@ -75,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         boolean hasChocolate = chocolateCheckBox.isChecked();
         // Calculate the price
         int price = calculatePrice(hasWhippedCream, hasChocolate);
-        // Displays the order summary on the screen
         // Display the order summary on the screen
         String message = createOrderSummary(name, price, hasWhippedCream, hasChocolate);
         // Use an intent to launch an email app.
@@ -90,13 +86,10 @@ public class MainActivity extends AppCompatActivity {
     }
     /**
      * Calculates the price of the order.
-     *
      * @param addWhippedCream is whether or not we should include whipped cream topping in the price
      * @param addChocolate    is whether or not we should include chocolate topping in the price
      * @return total price
      */
-
-
     private int calculatePrice(boolean addWhippedCream, boolean addChocolate) {
         //Price of 1 cup of coffee
         int basePrice = 5;
@@ -111,22 +104,22 @@ public class MainActivity extends AppCompatActivity {
             basePrice = basePrice + 2;
         }
         return quantity * basePrice;
+        }
 
-    }
     private String createOrderSummary(String name, int price, boolean addWhippedCream, boolean addChocolate) {
-        String priceMessage = getString(R.string.order_summary_name) + name;
-        priceMessage += "\n" + getString(R.string.order_summary_whipped_cream) + addWhippedCream;
-        priceMessage += "\n" + getString(R.string.order_summary_chocolate) + addChocolate;
+        String priceMessage = getResources().getString(R.string.order_summary_name) + name;
+        priceMessage += "\n" + getString(R.string.order_summary_whipped_cream);
+        priceMessage += "\n" + getString(R.string.order_summary_chocolate);
         priceMessage += "\n" + getString(R.string.order_summary_quantity) + quantity;
         priceMessage += "\n" + getString(R.string.order_summary_price) + price;
         NumberFormat.getCurrencyInstance().format(price);
         priceMessage += "\n" + getString(R.string.thank_you);
         return priceMessage;
-    }
 
-    /**
-     * This method displays the given quantity value on the screen.
-     */
+        }
+        /**
+         * This method displays the given quantity value on the screen.
+         */
     private void displayQuantity(int numberOfCoffees) {
         TextView quantityTextView = findViewById(R.id.quantity_text_view);
         quantityTextView.setText("" + numberOfCoffees);
